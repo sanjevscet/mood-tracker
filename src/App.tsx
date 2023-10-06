@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarComponent from "./Navbar";
 import "./App.css";
@@ -19,7 +24,8 @@ const App: React.FC = () => {
 
         <div className="containers mt-3 p-4">
           <Routes>
-            <Route path="/" element={<Home />} />
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<Navigate replace to="/mood-tracker" />} />
             <Route path="/mood-tracker" element={<Home />} />
             <Route path="/employee-mood-tracker" element={<EmployeeChart />} />
             <Route path="/benchmarking" element={<Benchmarking />} />
