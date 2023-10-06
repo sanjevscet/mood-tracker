@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,15 +8,18 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { getMoodDataByDay, uniqueMoods } from "./utils";
+import { Col, Row } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  Filler,
   Title,
   Tooltip,
   Legend
@@ -26,11 +29,11 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "top" as const,
+      position: "bottom" as const,
     },
     title: {
       display: true,
-      text: "Over All Happy Index",
+      text: "UKG Happy Index",
     },
   },
   scales: {
@@ -43,8 +46,10 @@ export const options = {
 };
 
 export function MoodLineChart() {
+  const [period, setPeriod] = useState("last-week");
+
   console.log(uniqueMoods);
-  const { labels, values } = getMoodDataByDay();
+  const { labels, values } = getMoodDataByDay(period);
 
   console.log({ labels, values });
 
@@ -54,6 +59,7 @@ export function MoodLineChart() {
     labels,
     datasets: [
       {
+        fill: true,
         label: "Happy Index",
         data: labels.map((l, i) => values[i]),
         borderColor: "rgb(53, 162, 235)",
@@ -63,8 +69,20 @@ export function MoodLineChart() {
   };
 
   return (
-    <div style={{ height: "50vh", width: "100%" }}>
-      <Line options={options} data={data} height={600} width={800} />
+    <div className="container" style={{ height: "80vh", width: "100vw" }}>
+      <select
+        className="form-select"
+        style={{ width: 200, float: "right", outline: "none" }}
+        defaultValue={period}
+        onChange={(e) => setPeriod(e.target.value)}
+      >
+        <option>Select Period</option>
+        <option value="last-week">Last Week</option>
+        <option value="last-month">Last Month</option>
+        <option value="last-3-month">Last 3 Months</option>
+      </select>
+
+      <Line options={options} data={data} height={900} width={1000} />
     </div>
   );
 }

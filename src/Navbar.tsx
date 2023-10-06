@@ -1,7 +1,12 @@
 import { Navbar, Nav } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../src/logo.png";
-import { EmojiHeartEyes } from "react-bootstrap-icons";
+import {
+  BarChart,
+  BarChartSteps,
+  EmojiHeartEyes,
+  PersonBoundingBox,
+} from "react-bootstrap-icons";
 
 export default function NavbarComponent() {
   const location = useLocation();
@@ -41,6 +46,27 @@ export default function NavbarComponent() {
             >
               <EmojiHeartEyes style={{ fontSize: "150%" }} />
               <span className="ms-2">Mood Tracker</span>
+            </Link>
+
+            <Link
+              style={{}}
+              to="/employee-mood-tracker"
+              className={`nav-link text-white ms-4 ${isActive(
+                "employee-mood-tracker"
+              )} `}
+            >
+              <PersonBoundingBox style={{ fontSize: "150%" }} />
+              <span className="ms-2">Employee Mood Tracker</span>
+            </Link>
+
+            <Link
+              to="/benchmarking"
+              className={`nav-link text-white ms-4 ${isActive(
+                "benchmarking"
+              )} `}
+            >
+              <BarChart style={{ fontSize: "150%" }} />
+              <span className="ms-2">Benchmarking</span>
             </Link>
           </Nav>
         </div>

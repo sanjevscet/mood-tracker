@@ -6,6 +6,8 @@ import "./App.css";
 import FooterComponent from "./Footer";
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
+import { EmployeeChart } from "./Pages/Employee";
+import { Benchmarking } from "./Pages/Benchmarking";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +21,9 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/mood-tracker" element={<Home />} />
+            <Route path="/employee-mood-tracker" element={<EmployeeChart />} />
+            <Route path="/benchmarking" element={<Benchmarking />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

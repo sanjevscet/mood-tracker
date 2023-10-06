@@ -29,12 +29,12 @@ export default function Home() {
     <>
       {values.length > 0 ? (
         <Row>
-          <Col sm={6}>
+          <Col sm={12}>
             <MoodLineChart />
           </Col>
-          <Col sm={6}>
+          {/* <Col sm={12}>
             <MoodLineChart2 />
-          </Col>
+          </Col> */}
         </Row>
       ) : (
         <Loader />
