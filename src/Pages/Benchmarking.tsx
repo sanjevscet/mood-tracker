@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import Loader from "./Loader";
 
 ChartJS.register(
   LinearScale,
@@ -89,9 +90,22 @@ export const options = {
 };
 
 export function Benchmarking() {
+  const [loader, setLoader] = React.useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
+  }, []);
   return (
-    <div className="container" style={{ height: "100vh", width: "100vw" }}>
-      <Chart type="bar" data={data} options={options} />
-    </div>
+    <>
+      {loader ? (
+        <Loader />
+      ) : (
+        <div className="container" style={{ height: "100vh", width: "100vw" }}>
+          <Chart type="bar" data={data} options={options} />
+        </div>
+      )}
+    </>
   );
 }

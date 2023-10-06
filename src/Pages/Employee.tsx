@@ -11,12 +11,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import {
-  generateDummyData,
-  getMoodDataByDay,
-  getMoodDataByDayForUser,
-  uniqueEmployee,
-} from "./utils";
+import { generateDummyData, getMoodDataByDay, uniqueEmployee } from "./utils";
+import Loader from "./Loader";
 
 ChartJS.register(
   CategoryScale,
@@ -91,46 +87,63 @@ export function EmployeeChart() {
     ],
   };
 
+  const [loader, setLoader] = React.useState(true);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
+  }, []);
+
   return (
-    <div className="container" style={{ paddingBottom: 60 }}>
-      <div className="d-flex flex-row" style={{ gap: 20, marginBottom: 10 }}>
-        <div className="form-group">
-          <label htmlFor="dropdown">Select User:</label>
-          <select
-            className="form-control"
-            id="dropdown"
-            style={{ width: 200, outline: "none" }}
-            value={selectedOption}
-            onChange={handleDropdownChange}
+    <>
+      {loader ? (
+        <Loader />
+      ) : (
+        <div className="container" style={{ paddingBottom: 60 }}>
+          <div
+            className="d-flex flex-row"
+            style={{ gap: 20, marginBottom: 10 }}
           >
-            {uniqueEmployee.map((emp, index) => {
-              return (
-                <option key={"option" + index} value={emp}>
-                  {formattedUsername(emp)}
-                </option>
-              );
-            })}
-          </select>
+            <div className="form-group">
+              <label htmlFor="dropdown">Select User:</label>
+              <select
+                className="form-control"
+                id="dropdown"
+                style={{ width: 200, outline: "none" }}
+                value={selectedOption}
+                onChange={handleDropdownChange}
+              >
+                {uniqueEmployee.map((emp, index) => {
+                  return (
+                    <option key={"option" + index} value={emp}>
+                      {formattedUsername(emp)}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="period">Select Period:</label>
+              <select
+                className="form-select"
+                id="period"
+                style={{ width: 200, outline: "none" }}
+                defaultValue={period}
+                onChange={(e) => setPeriod(e.target.value)}
+              >
+                {/* <option>Select Period</option> */}
+                <option value="last-week">Last Week</option>
+                <option value="last-month">Last Month</option>
+                <option value="last-3-month">Last 3 Months</option>
+              </select>
+            </div>
+          </div>
+          <div className="" style={{ height: "70vh" }}>
+            <Line options={options} data={data} height={900} width={1000} />
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="period">Select Period:</label>
-          <select
-            className="form-select"
-            id="period"
-            style={{ width: 200, outline: "none" }}
-            defaultValue={period}
-            onChange={(e) => setPeriod(e.target.value)}
-          >
-            {/* <option>Select Period</option> */}
-            <option value="last-week">Last Week</option>
-            <option value="last-month">Last Month</option>
-            <option value="last-3-month">Last 3 Months</option>
-          </select>
-        </div>
-      </div>
-      <div className="" style={{ height: "70vh" }}>
-        <Line options={options} data={data} height={900} width={1000} />
-      </div>
-    </div>
+      )}
+    </>
   );
 }

@@ -1,40 +1,25 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_URL } from "../Constants";
-import Loader from "./Loader";
+import React, { useEffect } from "react";
 import { MoodLineChart } from "./LineChart";
-import { MoodLineChart2 } from "./LineChart2";
 
 import { Row, Col } from "react-bootstrap";
+import Loader from "./Loader";
 
 export default function Home() {
-  const [apiData, setApiData] = useState([]);
-
-  const getApiData = async () => {
-    const { data } = await axios.get(API_URL + "/getcurrentskills");
-    setApiData(data);
-  };
-
-  const labels: string[] = apiData.map((d) => {
-    const label = d[0] as string;
-    return label;
-  });
-  const values: number[] = apiData.map((d) => d[1] as number);
+  const [loader, setLoader] = React.useState(true);
 
   useEffect(() => {
-    getApiData();
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
   }, []);
 
   return (
     <>
-      {values.length > 0 ? (
+      {!loader ? (
         <Row>
           <Col sm={12}>
             <MoodLineChart />
           </Col>
-          {/* <Col sm={12}>
-            <MoodLineChart2 />
-          </Col> */}
         </Row>
       ) : (
         <Loader />
