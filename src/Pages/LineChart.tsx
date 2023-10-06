@@ -69,7 +69,7 @@ export function MoodLineChart() {
   };
 
   return (
-    <div className="container" style={{ height: "80vh", width: "100vw" }}>
+    <div className="container">
       <select
         className="form-select"
         style={{ width: 200, float: "right", outline: "none" }}
@@ -80,9 +80,13 @@ export function MoodLineChart() {
         <option value="last-week">Last Week</option>
         <option value="last-month">Last Month</option>
         <option value="last-3-month">Last 3 Months</option>
-      </select>
-
-      <Line options={options} data={data} height={900} width={1000} />
+      </select>{" "}
+      <label style={{ float: "right", marginTop: 5, marginRight: 10 }}>
+        Select Period
+      </label>
+      <div style={{ height: "80vh" }}>
+        <Line options={options} data={data} height={900} width={1000} />
+      </div>
     </div>
   );
 }
